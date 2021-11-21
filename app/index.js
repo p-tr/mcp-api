@@ -25,7 +25,7 @@ app.use([
 
 // API root path, just says hello world ATM...
 app.get('/', (req, res) => {
-
+  res.send('Hello World !');
 })
 
 // This is an example error-throwing route to show how a generic catch-all
