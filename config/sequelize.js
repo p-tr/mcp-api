@@ -1,5 +1,4 @@
-// Here comes sequelize configuration file, replacing the default
-// config.json one.
+// This file replaces the default config.json sequelize configuration file.
 
 const logger = require('@@lib/logger');
 
