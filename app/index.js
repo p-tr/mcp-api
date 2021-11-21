@@ -23,12 +23,30 @@ app.use([
   hello()
 ]);
 
-// API root path, just says hello world atm...
+// API root path, just says hello world ATM...
 app.get('/', (req, res) => {
-  res.send('Hello World !');
+
 })
+
+// This is an example error-throwing route to show how a generic catch-all
+// error handler may work in a real / production environment.
+app.get('/error', (req, res) => {
+  // A even better approach would be to define appropriate object classes for
+  // each HTTP error code.
+  const error = new Error('Not implemented !');
+  error.code = 501;
+  throw error; // this will be catched by "catch-all" error handler, see below.
+});
 
 // load controllers
 app.use('/users', require('@@app/controllers/users'));
+
+// implement catch-all error handler.
+// see https://expressjs.com/en/guide/error-handling.html
+app.use((error, req, res, next) => {
+  const { code, message, name } = error;
+  res.status(code || 500); // if code is defined, use it, use 500 otherwise.
+  res.json({ code, message, name });
+})
 
 module.exports = app;
